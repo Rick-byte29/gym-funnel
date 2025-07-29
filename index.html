@@ -3,175 +3,315 @@
 <head>
   <meta charset="UTF-8">
   <title>GEAR-UP GYM</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- AOS Animate on Scroll Library -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:800,400" rel="stylesheet">
   <style>
     :root {
       --yellow: #FFD600;
-      --yellow-dark: #BBA800;
+      --yellow-dark: #bba800;
       --black: #101010;
-      --gray: #232323;
-      --shadow: 0 0 32px #FFD60066;
-      --transition: all 0.4s cubic-bezier(.73,-0.01,.25,1);
+      --gray: #232325;
     }
-    html, body { margin:0; padding:0; background:var(--black); color:var(--yellow); font-family:'Montserrat',Arial,sans-serif; }
-    a { color:var(--yellow); text-decoration:none; }
-    .sticky-bar {
-      position:fixed; top:0; left:0; right:0; z-index:1000; background:var(--gray); text-align:center;
-      padding:13px 0; box-shadow: var(--shadow);
-      font-size:1.14rem; color:var(--yellow)!important;
+    body {
+      background: var(--black);
+      color: var(--yellow);
+      font-family: 'Montserrat',Arial,sans-serif;
+      margin:0;
+      overflow-x: hidden;
+      --hero-rotate: 0deg;
     }
-    .sticky-bar a { margin-left:20px; font-weight:800; padding:10px 22px; border-radius:24px; background:var(--yellow); color:var(--black) !important; box-shadow:0 0 20px #FFD60066; transition:var(--transition);}
-    .sticky-bar a:hover { background:var(--yellow-dark);}
-    .hero-section {
+    /* 3D Hero Section */
+    .hero-3d-wrap {
       background: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
-      min-height:570px; position:relative; text-align:center; display:flex; flex-direction:column; justify-content:center;
-      box-shadow: 0 0 50px #FFD60020 inset;
+      min-height: 530px; display: flex; align-items: center; justify-content: center;
+      perspective: 1100px; position:relative; box-shadow: 0 0 50px #ffd60036 inset;
+      overflow: hidden;
     }
-    .hero-overlay {
-      position:absolute; top:0;left:0;right:0;bottom:0; background:#000A 40%;
+    .hero-content-3d {
+      text-align: center;
+      color: var(--yellow);
+      position: relative;
+      z-index: 2;
+      will-change: transform;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(.33,1.69,.65,1);
+    }
+    .gym-name-3d {
+      font-size: 3.3rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-shadow: 0 0 64px var(--yellow), 0 0 15px #000, 0 2px 30px #FFD60088;
+      margin-bottom: 9px;
+      animation: heroSpin 4.8s cubic-bezier(.65,0,.35,1) infinite alternate;
+      transform-style: preserve-3d;
+      filter: drop-shadow(0 0 40px #FFD60080);
+    }
+    @keyframes heroSpin {
+      0% { transform: rotateY(-12deg) scale(1.06); }
+      60% { transform: rotateY(12deg) scale(1); }
+      100% { transform: rotateY(-12deg) scale(1.02);}
+    }
+    .hero-tagline-3d {
+      font-size: 2rem;
+      text-shadow: 0 0 15px #FFD60099, 0 1px 22px #FFD60045;
+      color: var(--yellow);
+      margin-bottom: 27px;
+      backface-visibility: hidden;
+      transform: translateZ(40px);
+      will-change: transform;
+    }
+    .cta-btn-3d {
+      display: inline-block;
+      background: linear-gradient(90deg,var(--yellow) 80%,var(--yellow-dark));
+      color: var(--black);
+      font-weight: 900;
+      padding: 1.2em 2.7em;
+      border-radius: 3em;
+      font-size: 1.36rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 54px #FFD60080, 0 2px 36px #FFD60050;
+      text-shadow: 0 1px 8px #FFD60077;
+      margin-top: 1.2em;
+      transition: background .18s, transform .18s;
+      perspective: 500px;
+      transform-style: preserve-3d;
+      will-change: transform;
+      position:relative;
+      z-index:6;
+    }
+    .cta-btn-3d:hover {
+      background: linear-gradient(90deg,yellow 90%,#FFD600);
+      transform: scale(1.07) rotateY(-9deg);
+      box-shadow: 0 0 70px #FFD600B0, 0 4px 56px #FFD60090;
+    }
+    .sticky-bar-3d {
+      position:fixed; top:0;left:0;right:0;z-index:9999;
+      background:var(--gray);
+      box-shadow:0 0 20px #FFD60055;
+      color:var(--yellow);
+      font-size:1.11rem;
+      text-align:center;
+      padding:14px 0;
+      transform: translateZ(80px);
+    }
+    .sticky-bar-3d a {
+      margin-left:18px;
+      font-weight:900;
+      padding:10px 23px;
+      border-radius:14px;
+      background:var(--yellow);
+      color:var(--black)!important;
+      box-shadow:0 0 20px #FFD60088;
+      transition:background .18s, transform .19s;
+    }
+    .sticky-bar-3d a:hover {
+      background: var(--yellow-dark);
+      transform: scale(1.1) rotateY(9deg);
+    }
+    section { max-width:1200px; margin:80px auto 0 auto; padding:10px 24px;}
+    /* 3D Cards */
+    .programs-3d {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap: 36px;
+      margin-top: 2.2em;
+      perspective: 1100px;
+    }
+    .prog-card-3d {
+      background: var(--gray);
+      border-radius: 21px;
+      box-shadow:0 0 23px #FFD60026;
+      border-bottom:8px solid var(--yellow);
+      padding: 34px 19px 28px 19px;
+      text-align: center;
+      will-change: transform;
+      transform-style: preserve-3d;
+      transition: box-shadow .24s, background .24s, transform .36s cubic-bezier(.34,1.3,.5,1.3);
+      position: relative;
+      outline: none;
+    }
+    .prog-card-3d:hover {
+      transform: rotateY(17deg) scale(1.07) translateY(-20px);
+      background: var(--yellow-dark);
+      color: #fff;
+      box-shadow:0 0 48px #FFD600AD, 0 0 7px #FFD60030;
+      z-index:4;
+    }
+    .prog-card-3d img {
+      width:85px; height:85px; border-radius:50%; margin-bottom:18px; border:3.7px solid var(--yellow);
+      transition: transform .32s;
+    }
+    .prog-card-3d:hover img { transform: rotateY(20deg) scale(1.05);}
+    .prog-card-3d h3 {
+      color:var(--yellow);
+      margin-bottom:6px;
+      font-size:1.21rem;
+      text-shadow:0 0 11px #FFD600A3;
+    }
+    /* 3D Package cards */
+    .packages-3d {
+      display: flex;
+      gap: 38px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin:33px 0;
+      perspective: 1500px;
+    }
+    .package-3d {
+      background: var(--gray);
+      color: var(--yellow);
+      padding: 48px 29px 41px 29px;
+      border-radius: 23px;
+      width: 320px;
+      box-shadow:0 0 22px #FFD60030;
+      border:2.4px solid #FFD6003c;
+      text-align:center;
+      margin-bottom: 22px;
+      position:relative;
+      transition: transform .47s cubic-bezier(.64,1.6,.33,1), box-shadow .31s;
+      will-change:transform;
+      outline: none;
+      transform-style: preserve-3d;
+    }
+    .package-3d.best {
+      border:3.7px solid var(--yellow);
+      box-shadow:0 0 64px #FFD60099, 0 0 24px var(--yellow-dark);
+      z-index: 2;
+    }
+    .package-3d .best-badge {
+      position:absolute; top:-20px; left:50%; transform:translateX(-50%);
+      background:var(--yellow); color:var(--black);
+      font-weight:800; font-size:1.02rem;
+      letter-spacing:1.1px;padding:9px 36px;
+      border-radius:40px;box-shadow:0 0 12px var(--yellow);
+    }
+    .pack-title { font-size:1.35rem; font-weight:800;margin-bottom:17px;}
+    .pack-price { font-size:2.2rem; color:#fff; font-weight:bold;margin:10px 0 12px 0;}
+    .package-3d ul {list-style:none;padding:0;text-align:left;margin:16px auto 0 auto;max-width:222px;}
+    .package-3d li { color:#FFD600BB; margin-bottom:3px;}
+    .package-3d:hover {
+      transform: rotateY(-27deg) scale(1.08) translateY(-20px);
+      box-shadow: 0 0 70px #FFD600C0, 0 2px 32px #FFD60050;
+    }
+    /* 3D Testimonials slider panels */
+    .testimonials-3d-slider {
+      position:relative; max-width:770px; margin: 34px auto 0 auto;
+      display:flex;align-items:center;justify-content:center;gap:36px;
+      perspective:800px;
+      min-height:202px;
+    }
+    .testimonial-3d-panel {
+      background:var(--gray); color:#FFD600; border-radius:13px;
+      padding:36px 30px; box-shadow:0 0 19px #FFD60043;
+      text-align:center; min-width:350px;
+      position:absolute;
+      opacity:0;transform: rotateY(-90deg) scale(.8) translateZ(-66px);
+      transition: opacity .63s, transform .8s cubic-bezier(.56,1.2,.41,1.5);
+      will-change:transform, opacity;
       z-index:1;
     }
-    .hero-content {
-      position:relative; z-index:2; color:var(--yellow); padding-top:110px;
-    }
-    .gym-name {
-      font-size:3rem; font-weight:800; letter-spacing:3px; color:var(--yellow);
-      text-shadow:0 0 32px var(--yellow), 0 0 15px #000;
-      margin-top:0;
-      animation: glow 2s infinite alternate;
-    }
-    @keyframes glow { 100% {text-shadow:0 0 53px var(--yellow),0 0 25px var(--yellow-dark);} }
-    .hero-tagline {
-      font-size:2rem; margin-top:17px; text-shadow:0 0 15px #FFD60088;}
-    .join-btn {
-      margin-top:40px; font-size:1.5rem; font-weight:800; background:var(--yellow); color:var(--black);
-      border:none; border-radius:32px; padding:18px 40px; cursor:pointer; 
-      box-shadow:0 0 20px var(--yellow),0 0 2px #111;
-      transition:var(--transition); position:relative; z-index:2;
-      animation: pulsebtn 2.1s infinite alternate;
-    }
-    @keyframes pulsebtn { 60% {box-shadow:0 0 45px var(--yellow);} }
-    section {max-width:1200px; margin:80px auto 0 auto; padding:10px 24px;}
-    /* Program Cards */
-    .programs { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin:34px 0;}
-    .prog-card {
-      background:var(--gray); padding:27px 16px 23px 16px; border-radius:15px; box-shadow:0 0 18px #FFD60033;
-      border-bottom:5px solid var(--yellow); text-align:center;
-      position:relative; overflow:hidden; transition:var(--transition);
-    }
-    .prog-card img { width:68px; height:68px; border-radius:50%; margin-bottom:14px; border:2.5px solid var(--yellow);}
-    .prog-card h3 { color:var(--yellow); margin-bottom:8px; font-size:1.17rem; }
-    .prog-card p { color:#fff; font-size:1.01rem; }
-    .prog-card:hover { background:var(--yellow-dark); color:#FFF; transform:translateY(-12px) scale(1.04);}
-    /* Packages */
-    .packages { display:flex; gap:22px; justify-content:center; flex-wrap:wrap; }
-    .package {
-      background:var(--gray); color:var(--yellow); padding:38px 26px; border-radius:17px; width:320px;
-      box-shadow:0 0 16px var(--yellow-dark); text-align:center; border:2.5px solid #FFD60033; position:relative;
-      transition:transform .19s; margin-bottom:24px;
-      opacity: 0; transform:translateY(80px); /* For animation start */
-      animation: packageReveal .9s forwards;
-      animation-delay: 0.15s;
-    }
-    .package.best { border:3px solid var(--yellow); box-shadow:0 0 40px #FFD60066; }
-    .best-badge {
-      position:absolute; top:-14px; left:50%; transform:translateX(-50%);
-      background:var(--yellow); color:var(--black); font-weight:700;
-      padding:6.5px 20px; border-radius:40px; font-size:.95rem; letter-spacing:1.2px;
-      box-shadow:0 0 10px var(--yellow); 
+    .testimonial-3d-panel.active {
+      position:relative;
+      opacity:1;
+      transform: rotateY(0deg) scale(1) translateZ(0px);
       z-index:2;
+      box-shadow:0 0 70px #FFD60042,0 2px 40px #FFD60030;
     }
-    .pack-title { font-size:1.3rem; font-weight:800; color:var(--yellow);}
-    .pack-price { font-size:2.2rem; margin:16px 0 12px 0;color:#fff; font-weight:bold;}
-    .package ul {list-style:none;padding:0;text-align:left;margin:16px auto 0 auto;max-width:222px;}
-    .package li {margin-bottom:3px;color:#FFD600BB;}
-    @keyframes packageReveal {
-      to { opacity: 1; transform:translateY(0);}
-    }
-    /* Testimonials Slider */
-    .testimonials-slider { position:relative; max-width:700px; margin:auto; overflow:hidden;}
-    .testimonial { display:none; background:var(--gray); color:#FFD600; border-radius:10px;
-      padding:28px 24px;margin:16px 0; box-shadow:0 0 20px #FFD60022; text-align:center;}
-    .testimonial.active {display:block;animation:slidein .59s;}
-    @keyframes slidein { from {opacity:0;transform:translateX(54px);} to {opacity:1;transform:translateX(0);} }
-    .testimonial-author { font-weight:700; color:var(--yellow);}
-    .testimonial-controls {text-align:center;}
-    .testimonial-dots {display:inline-block;}
-    .testimonial-dot {
+    .testimonial-author { font-weight:700; color:var(--yellow);margin-top:13px;}
+    .testimonial-dots-3d {text-align:center;margin-top:13px; z-index:3;position:relative;}
+    .testimonial-dot-3d {
       display:inline-block;width:15px;height:15px;background:var(--yellow);border-radius:50%;margin:3px;opacity:.48;cursor:pointer;transition:.18s;
-      border:2.5px solid #FFD60088;
-    }
-    .testimonial-dot.active {opacity:1;border:3px solid #FFD600ce;}
-    /* Admission Form */
-    .admission-form {
-      background:#181818; border-radius:17px; box-shadow:0 0 18px #FFD60099;
-      padding:35px 25px; margin:auto;max-width:430px;text-align:center;
+      border:2.5px solid #FFD60065;}
+    .testimonial-dot-3d.active {opacity:1;border:3px solid #FFD600ce;}
+    /* 3D Form & bump-offer */
+    .admission-form-3d {
+      background:#181818;
+      border-radius:21px;
+      box-shadow:0 0 22px #FFD600cc;
+      padding:43px 31px 35px 31px; margin:auto;max-width:430px;text-align:center;
       color:#fff;
+      margin-top:50px;
+      transition: box-shadow .21s;
+      transform-style: preserve-3d;
     }
-    .admission-form input, .admission-form select {
-      width:98%;margin:9px auto 15px auto;padding:14px;border-radius:8px;
-      border:2.3px solid var(--yellow); font-size:1.1rem; background:#131313;color:var(--yellow);display:block;
+    .admission-form-3d input, .admission-form-3d select {
+      width:99%;margin:13px auto 14px auto;padding:14px;border-radius:9px;
+      border:2.8px solid var(--yellow); font-size:1.11rem; background:#131313;color:var(--yellow);display:block;
+      outline:none;
+      transition: border .17s;
+      backface-visibility:hidden;
     }
-    .admission-form button {
+    .admission-form-3d button {
       width:100%;background:var(--yellow);color:var(--black);font-weight:900;
-      border:0;padding:17px 0;margin:16px 0 7px 0;border-radius:11px;font-size:1.22rem;cursor:pointer;box-shadow: 0 0 12px var(--yellow);}
-    .bump-offer {background: #FFD60020;padding:14px;border-radius:14px;margin:16px 0;color:#FFD600;font-size:1.02rem;border:2px dashed var(--yellow);}
-    #thanksMsg {display:none;color:var(--yellow);font-weight:700;margin-top:20px;}
+      border:0;padding:19px 0;margin:16px 0 7px 0;border-radius:13px;font-size:1.24rem;cursor:pointer;box-shadow:0 0 24px var(--yellow);
+      transition:transform .17s;
+    }
+    .admission-form-3d button:hover {
+      transform: rotateY(-7deg) scale(1.03);
+    }
+    .bump-offer-3d {background: #FFD60029;padding:16px 11px;border-radius:14px;margin:16px 0;color:#FFD600;font-size:1.06rem;border:2.1px dashed var(--yellow);}
+    #thanksMsg-3d {display:none;color:var(--yellow);font-weight:700;margin-top:24px;font-size:1.2rem;}
     /* Footer */
-    .footer {background:var(--gray);color:#FFD600c2;text-align:center; padding:28px 2px 13px 2px; font-size:1rem;margin-top:60px;}
-    .footer a { color:var(--yellow);}
+    .footer-3d {background:var(--gray);color:#FFD600c2;text-align:center; padding:30px 2px 16px 2px; font-size:1.08rem;margin-top:66px;}
+    .footer-3d a { color:var(--yellow);}
     @media(max-width:900px){section{padding:10px 7vw;}}
-    @media(max-width:700px){.hero-section{min-height:430px;}.programs,.packages{grid-template-columns:1fr;flex-direction:column;align-items:center;}}
+    @media(max-width:700px){
+      .hero-3d-wrap{min-height:320px;}
+      .programs-3d, .packages-3d{grid-template-columns:1fr;flex-direction:column;align-items:center;}
+      .testimonials-3d-slider{min-width:100vw;}
+      .testimonial-3d-panel{min-width:200px;}
+    }
   </style>
 </head>
 <body>
-<div class="sticky-bar">
+<div class="sticky-bar-3d">
   Get Free Consultation! <a href="tel:+919999988888">Call Now</a>
 </div>
 
-<!-- HERO SECTION WITH ANIMATION -->
-<div class="hero-section" id="hero">
-  <div class="hero-overlay"></div>
-  <div class="hero-content" data-aos="fade-up">
-    <div class="gym-name">GEAR-UP GYM</div>
-    <div class="hero-tagline">Power, Performance, Pride.<br>Level Up with <span style="color:#FFD600">GEAR-UP GYM</span></div>
-    <button class="join-btn" onclick="document.getElementById('admission').scrollIntoView({behavior:'smooth'})">JOIN NOW</button>
+<!-- 3D HERO SECTION -->
+<div class="hero-3d-wrap">
+  <div class="hero-content-3d" id="hero3d">
+    <div class="gym-name-3d">GEAR-UP GYM</div>
+    <div class="hero-tagline-3d">Power, Performance, Pride.<br>Level Up with <span style="color:#FFD600">GEAR-UP GYM</span></div>
+    <button class="cta-btn-3d" onclick="document.getElementById('admission3d').scrollIntoView({behavior:'smooth'})">JOIN NOW</button>
   </div>
 </div>
 
 <section>
-  <h2 data-aos="fade-up">Why Choose Us?</h2>
-  <div class="programs">
-    <div class="prog-card" data-aos="fade-up" data-aos-delay="100">
-      <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/000000/external-dumbbell-gym-flaticons-lineal-color-flat-icons-2.png"/>
+  <h2 style="text-align:center;">Why Choose Us?</h2>
+  <div class="programs-3d">
+    <div class="prog-card-3d" tabindex="0">
+      <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/000000/external-dumbbell-gym-flaticons-lineal-color-flat-icons-2.png" alt="Strength Icon"/>
       <h3>Strength Training</h3>
-      <p>Bench Press, Squats, Deadlifts & More<br><span style="color:#FFD600">Build: Chest, Legs, Core, Back</span></p>
+      <p>Bench Press, Squats, Deadlifts<br>
+        <span style="color:#FFD600">Target: Chest, Legs, Core, Back</span></p>
     </div>
-    <div class="prog-card" data-aos="fade-up" data-aos-delay="180">
-      <img src="https://img.icons8.com/color/64/000000/yoga.png"/>
+    <div class="prog-card-3d" tabindex="0">
+      <img src="https://img.icons8.com/color/64/000000/yoga.png" alt="Yoga Icon"/>
       <h3>Group Classes</h3>
-      <p>Yoga, Zumba, HIIT, Cardio<br><span style="color:#FFD600">Shape: Flexibility, Mind, Endurance</span></p>
+      <p>Yoga, HIIT, Zumba, Cardio<br>
+        <span style="color:#FFD600">Flexibility, Mind, Endurance</span></p>
     </div>
-    <div class="prog-card" data-aos="fade-up" data-aos-delay="260">
-      <img src="https://img.icons8.com/color/64/000000/personal-trainer.png"/>
+    <div class="prog-card-3d" tabindex="0">
+      <img src="https://img.icons8.com/color/64/000000/personal-trainer.png" alt="PT Icon"/>
       <h3>Personal Coaching</h3>
-      <p>Certified Trainers, Custom Plans<br><span style="color:#FFD600">Focus: All Body Parts</span></p>
+      <p>Certified Trainers, Custom Plans<br>
+        <span style="color:#FFD600">All Body Parts</span></p>
     </div>
-    <div class="prog-card" data-aos="fade-up" data-aos-delay="340">
-      <img src="https://img.icons8.com/color/64/000000/bath.png"/>
+    <div class="prog-card-3d" tabindex="0">
+      <img src="https://img.icons8.com/color/64/000000/bath.png" alt="Wellness Icon"/>
       <h3>Wellness Zone</h3>
-      <p>Steam, Sauna, Nutritional Advice<br><span style="color:#FFD600">Recover & Recharge</span></p>
+      <p>Steam, Sauna, Nutrition Advice<br>
+        <span style="color:#FFD600">Recover & Recharge</span></p>
     </div>
   </div>
 </section>
 
 <section>
-  <h2 style="text-align:center;" data-aos="fade-up">Our Packages</h2>
-  <div class="packages">
-    <div class="package" style="animation-delay:.10s" data-aos="flip-left">
+  <h2 style="text-align:center;">Our Packages</h2>
+  <div class="packages-3d">
+    <div class="package-3d" tabindex="0">
       <div class="pack-title">Basic Beast</div>
       <div class="pack-price">₹1,799/mo</div>
       <ul>
@@ -180,7 +320,7 @@
         <li>Free Nutrition Session</li>
       </ul>
     </div>
-    <div class="package best" style="animation-delay:.30s" data-aos="flip-up">
+    <div class="package-3d best" tabindex="0">
       <span class="best-badge">BEST VALUE</span>
       <div class="pack-title">Ultimate Warrior</div>
       <div class="pack-price">₹2,999/mo</div>
@@ -191,7 +331,7 @@
         <li>Sauna & Steam</li>
       </ul>
     </div>
-    <div class="package" style="animation-delay:.50s" data-aos="flip-right">
+    <div class="package-3d" tabindex="0">
       <div class="pack-title">Titan Elite</div>
       <div class="pack-price">₹5,499/mo</div>
       <ul>
@@ -205,33 +345,31 @@
 </section>
 
 <section>
-  <h2 style="text-align:center;" data-aos="fade-up">What Our Members Say</h2>
-  <div class="testimonials-slider" data-aos="zoom-in-up">
-    <div class="testimonial active">
-      <p>“I never thought I’d look forward to gym days! GEAR-UP is not just a gym—it’s passion. The lighting and music pump me up!”</p>
+  <h2 style="text-align:center;">What Our Members Say</h2>
+  <div class="testimonials-3d-slider">
+    <div class="testimonial-3d-panel active">
+      <p>“I never thought I’d look forward to gym days! GEAR-UP is not just a gym—it’s passion. Lighting and energy are insane!”</p>
       <div class="testimonial-author">- Kavya Sharma, Delhi</div>
     </div>
-    <div class="testimonial">
-      <p>“The coaching team is world-class! I achieved my transformation faster than ever. Highly recommend Ultimate Warrior plan.”</p>
+    <div class="testimonial-3d-panel">
+      <p>“The coaching is world-class! Got my transformation faster than ever. Ultimate Warrior plan is for serious results.”</p>
       <div class="testimonial-author">- Aarav Mehra, Gurgaon</div>
     </div>
-    <div class="testimonial">
-      <p>“Modern facilities, great vibe, welcoming environment. Love the early bird discounts and events!”</p>
+    <div class="testimonial-3d-panel">
+      <p>“Modern facilities, great vibe, welcoming environment. Love their 3D events and new member bump offers!”</p>
       <div class="testimonial-author">- Ritesh Singh, Noida</div>
     </div>
-    <div class="testimonial-controls">
-      <span class="testimonial-dots">
-        <span class="testimonial-dot active"></span>
-        <span class="testimonial-dot"></span>
-        <span class="testimonial-dot"></span>
-      </span>
-    </div>
+  </div>
+  <div class="testimonial-dots-3d">
+    <span class="testimonial-dot-3d active"></span>
+    <span class="testimonial-dot-3d"></span>
+    <span class="testimonial-dot-3d"></span>
   </div>
 </section>
 
-<section id="admission">
-  <h2 style="text-align:center;" data-aos="fade-up">Join GEAR-UP GYM</h2>
-  <form id="admissionForm" class="admission-form" autocomplete="off" data-aos="fade-right">
+<section id="admission3d">
+  <h2 style="text-align:center;">Join GEAR-UP GYM</h2>
+  <form id="admissionForm3d" class="admission-form-3d" autocomplete="off">
     <input type="text" name="name" placeholder="Full Name" required/>
     <input type="email" name="email" placeholder="Email Address" required/>
     <input type="tel" name="phone" placeholder="Mobile Number" required/>
@@ -240,48 +378,56 @@
       <option value="Ultimate Warrior">Ultimate Warrior (₹2,999/mo)</option>
       <option value="Titan Elite">Titan Elite (₹5,499/mo)</option>
     </select>
-    <div class="bump-offer" id="bumpOffer">
-      🔥 LIMITED TIME: <b>20% OFF for 3 months</b> if you enroll before <span id="offerDate"></span>!
+    <div class="bump-offer-3d">
+      🔥 LIMITED TIME: <b>20% OFF for 3 months</b> if you enroll before <span id="offerDate3d"></span>!
       <br><input type="checkbox" name="bump" required/> Yes, I want the bump offer!
     </div>
     <button type="submit">Become a GEAR-UP Member</button>
-    <div id="thanksMsg">Thank you for joining GEAR-UP GYM!<br>Check your email for a welcome message.</div>
+    <div id="thanksMsg-3d">Thank you for joining GEAR-UP GYM!<br>Check your email for a welcome message.</div>
   </form>
 </section>
-
-<div class="footer">
+<div class="footer-3d">
   &copy; 2025 GEAR-UP GYM | <a href="mailto:aisignalhunter@gmail.com">Contact</a> | 24/7 Access | IG @gearupgym | Unleash the Beast
 </div>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  // AOS Page-wide scroll animation
-  AOS.init({duration: 950, once:true});
-  // Set bump offer date +5 days
-  const offerEnd = new Date(Date.now() + 5*24*60*60*1000);
-  document.getElementById('offerDate').innerText = offerEnd.toDateString().slice(4);
-
-  // Testimonials Slider
-  const testimonials = document.querySelectorAll('.testimonial');
-  const dots = document.querySelectorAll('.testimonial-dot');
-  let tidx = 0;
-  function showTestimonial(idx){
-    testimonials.forEach((t, i) => {
-      t.classList.toggle('active', i===idx);
-      dots[i].classList.toggle('active', i===idx);
-    });
+  // Bump offer expiry: +5 days from now
+  document.getElementById('offerDate3d').innerText = new Date(Date.now() + 5*24*60*60*1000).toDateString().slice(4);
+  // 3D Testimonials Slider Logic
+  const panels = document.querySelectorAll('.testimonial-3d-panel');
+  const dots = document.querySelectorAll('.testimonial-dot-3d');
+  let tIdx=0;
+  function showT(idx){
+    panels.forEach((el,i)=>el.classList.toggle('active',i===idx));
+    dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    tIdx=idx;
   }
-  dots.forEach((d,i) => d.onclick = ()=>{tidx=i;showTestimonial(i)});
-  setInterval(()=>{ tidx=(tidx+1)%testimonials.length;showTestimonial(tidx);}, 4000);
+  dots.forEach((d,idx)=>d.onclick=()=>showT(idx));
+  setInterval(()=>{showT((tIdx+1)%panels.length);}, 5000);
 
-  // Form Submission (demo only)
-  document.getElementById('admissionForm').onsubmit = function(e){
+  // 3D Hero Parallax Effect
+  const hero = document.getElementById('hero3d');
+  document.querySelector('.hero-3d-wrap').addEventListener('mousemove', e=>{
+    const {left,top,width,height} = e.target.getBoundingClientRect();
+    const x = ((e.clientX-left)-width/2)/width;
+    const y = ((e.clientY-top)-height/2)/height;
+    hero.style.transform = `rotateY(${x*18}deg) rotateX(${y*-12}deg)`;
+  });
+  document.querySelector('.hero-3d-wrap').addEventListener('mouseleave',()=>hero.style.transform="");
+
+  // 3D form thank you
+  document.getElementById('admissionForm3d').onsubmit = function(e){
     e.preventDefault();
-    document.getElementById('admissionForm').reset();
-    document.getElementById('thanksMsg').style.display="block";
-    setTimeout(()=>{document.getElementById('thanksMsg').style.display="none";},4000);
-    // Place backend integration or Formspree/Zapier/Google Forms here
+    document.getElementById('admissionForm3d').reset();
+    document.getElementById('thanksMsg-3d').style.display="block";
+    setTimeout(()=>{document.getElementById('thanksMsg-3d').style.display="none";},4000);
+    // Place your email backend integration here.
   }
+  // Make all 3D cards accessible by keyboard
+  document.querySelectorAll('.prog-card-3d, .package-3d').forEach(c=>{
+    c.addEventListener('focus',()=>c.classList.add('prog-card-3d--active'));
+    c.addEventListener('blur',()=>c.classList.remove('prog-card-3d--active'));
+  });
 </script>
 </body>
 </html>
