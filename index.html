@@ -2,206 +2,285 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Yellow Pulse Gym</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:800,400" rel="stylesheet">
+  <title>GEAR-UP GYM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- AOS Animate on Scroll Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap" rel="stylesheet">
   <style>
     :root {
       --yellow: #FFD600;
-      --yellow-light: #FFF59D;
+      --yellow-dark: #BBA800;
       --black: #101010;
-      --shadow: 0 0 16px #FFD60088;
+      --gray: #232323;
+      --shadow: 0 0 32px #FFD60066;
+      --transition: all 0.4s cubic-bezier(.73,-0.01,.25,1);
     }
-    body { background: var(--black); color: var(--yellow); font-family: 'Montserrat',Arial,sans-serif; margin:0; }
+    html, body { margin:0; padding:0; background:var(--black); color:var(--yellow); font-family:'Montserrat',Arial,sans-serif; }
+    a { color:var(--yellow); text-decoration:none; }
     .sticky-bar {
-      position:fixed; top:0;left:0;width:100%;background:#191919;padding:13px;text-align:center;
-      color:var(--yellow);z-index:999;box-shadow:var(--shadow);
-      font-weight:bold;letter-spacing:1px; }
-    .sticky-bar a { color:var(--yellow);margin-left:18px;text-decoration:underline; }
-    .gym-header {
-      padding:55px 0 15px 0;text-align:center;
-      font-size:2.7rem;font-weight:800;letter-spacing:2.2px;
-      text-shadow:0 0 20px var(--yellow),0 0 10px #0008;
+      position:fixed; top:0; left:0; right:0; z-index:1000; background:var(--gray); text-align:center;
+      padding:13px 0; box-shadow: var(--shadow);
+      font-size:1.14rem; color:var(--yellow)!important;
     }
-    .hero {
-      text-align:center;padding:1.5em 1em;
-      background: #111111;
-      border-radius:14px; box-shadow: var(--shadow);
-      margin:30px auto 30px auto;max-width:750px;
+    .sticky-bar a { margin-left:20px; font-weight:800; padding:10px 22px; border-radius:24px; background:var(--yellow); color:var(--black) !important; box-shadow:0 0 20px #FFD60066; transition:var(--transition);}
+    .sticky-bar a:hover { background:var(--yellow-dark);}
+    .hero-section {
+      background: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+      min-height:570px; position:relative; text-align:center; display:flex; flex-direction:column; justify-content:center;
+      box-shadow: 0 0 50px #FFD60020 inset;
     }
-    .hero .cta-btn {
-      background:var(--yellow);color:#111;
-      font-weight:bold;border:0;padding:16px 34px;
-      font-size:1.13rem;border-radius:8px;margin-top:12px;
-      cursor:pointer;box-shadow:0 0 8px var(--yellow); }
-    .programs, .testimonials, .packages { display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
-    .prog-card, .testimonial, .package {
-      background:#181818;padding:22px;border-radius:14px;min-width:240px;max-width:310px;text-align:center;
-      margin-bottom:18px;box-shadow:0 0 10px #0007;
-      border-left:4px solid var(--yellow);
+    .hero-overlay {
+      position:absolute; top:0;left:0;right:0;bottom:0; background:#000A 40%;
+      z-index:1;
     }
-    .prog-card h3 { color: var(--yellow-light); margin-bottom:8px;}
-    .prog-card p {font-size:1rem;color:#fff;}
-    .testimonial { border-color:#FFD60080;}
-    .testimonial-author { font-weight:bold;color:var(--yellow);}
-    .testimonials {margin-bottom:5px;}
-    .packages {margin:30px 0;}
-    .package { border:2px solid #FFD60044; }
-    .package.best { border:2.5px solid var(--yellow); box-shadow:0 0 20px var(--yellow);}
-    .pack-title { color:var(--yellow);font-size:1.2rem; }
-    .pack-price { font-size:2rem;color:#fff;margin:18px 0;}
-    .package ul {list-style:none;padding:0;}
-    .package li {color:var(--yellow-light);}
+    .hero-content {
+      position:relative; z-index:2; color:var(--yellow); padding-top:110px;
+    }
+    .gym-name {
+      font-size:3rem; font-weight:800; letter-spacing:3px; color:var(--yellow);
+      text-shadow:0 0 32px var(--yellow), 0 0 15px #000;
+      margin-top:0;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow { 100% {text-shadow:0 0 53px var(--yellow),0 0 25px var(--yellow-dark);} }
+    .hero-tagline {
+      font-size:2rem; margin-top:17px; text-shadow:0 0 15px #FFD60088;}
+    .join-btn {
+      margin-top:40px; font-size:1.5rem; font-weight:800; background:var(--yellow); color:var(--black);
+      border:none; border-radius:32px; padding:18px 40px; cursor:pointer; 
+      box-shadow:0 0 20px var(--yellow),0 0 2px #111;
+      transition:var(--transition); position:relative; z-index:2;
+      animation: pulsebtn 2.1s infinite alternate;
+    }
+    @keyframes pulsebtn { 60% {box-shadow:0 0 45px var(--yellow);} }
+    section {max-width:1200px; margin:80px auto 0 auto; padding:10px 24px;}
+    /* Program Cards */
+    .programs { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin:34px 0;}
+    .prog-card {
+      background:var(--gray); padding:27px 16px 23px 16px; border-radius:15px; box-shadow:0 0 18px #FFD60033;
+      border-bottom:5px solid var(--yellow); text-align:center;
+      position:relative; overflow:hidden; transition:var(--transition);
+    }
+    .prog-card img { width:68px; height:68px; border-radius:50%; margin-bottom:14px; border:2.5px solid var(--yellow);}
+    .prog-card h3 { color:var(--yellow); margin-bottom:8px; font-size:1.17rem; }
+    .prog-card p { color:#fff; font-size:1.01rem; }
+    .prog-card:hover { background:var(--yellow-dark); color:#FFF; transform:translateY(-12px) scale(1.04);}
+    /* Packages */
+    .packages { display:flex; gap:22px; justify-content:center; flex-wrap:wrap; }
+    .package {
+      background:var(--gray); color:var(--yellow); padding:38px 26px; border-radius:17px; width:320px;
+      box-shadow:0 0 16px var(--yellow-dark); text-align:center; border:2.5px solid #FFD60033; position:relative;
+      transition:transform .19s; margin-bottom:24px;
+      opacity: 0; transform:translateY(80px); /* For animation start */
+      animation: packageReveal .9s forwards;
+      animation-delay: 0.15s;
+    }
+    .package.best { border:3px solid var(--yellow); box-shadow:0 0 40px #FFD60066; }
+    .best-badge {
+      position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+      background:var(--yellow); color:var(--black); font-weight:700;
+      padding:6.5px 20px; border-radius:40px; font-size:.95rem; letter-spacing:1.2px;
+      box-shadow:0 0 10px var(--yellow); 
+      z-index:2;
+    }
+    .pack-title { font-size:1.3rem; font-weight:800; color:var(--yellow);}
+    .pack-price { font-size:2.2rem; margin:16px 0 12px 0;color:#fff; font-weight:bold;}
+    .package ul {list-style:none;padding:0;text-align:left;margin:16px auto 0 auto;max-width:222px;}
+    .package li {margin-bottom:3px;color:#FFD600BB;}
+    @keyframes packageReveal {
+      to { opacity: 1; transform:translateY(0);}
+    }
+    /* Testimonials Slider */
+    .testimonials-slider { position:relative; max-width:700px; margin:auto; overflow:hidden;}
+    .testimonial { display:none; background:var(--gray); color:#FFD600; border-radius:10px;
+      padding:28px 24px;margin:16px 0; box-shadow:0 0 20px #FFD60022; text-align:center;}
+    .testimonial.active {display:block;animation:slidein .59s;}
+    @keyframes slidein { from {opacity:0;transform:translateX(54px);} to {opacity:1;transform:translateX(0);} }
+    .testimonial-author { font-weight:700; color:var(--yellow);}
+    .testimonial-controls {text-align:center;}
+    .testimonial-dots {display:inline-block;}
+    .testimonial-dot {
+      display:inline-block;width:15px;height:15px;background:var(--yellow);border-radius:50%;margin:3px;opacity:.48;cursor:pointer;transition:.18s;
+      border:2.5px solid #FFD60088;
+    }
+    .testimonial-dot.active {opacity:1;border:3px solid #FFD600ce;}
+    /* Admission Form */
     .admission-form {
-      max-width:450px;margin:30px auto 0 auto;background:#131313;padding:30px 25px;border-radius:14px;box-shadow:var(--shadow);color:#fff;
+      background:#181818; border-radius:17px; box-shadow:0 0 18px #FFD60099;
+      padding:35px 25px; margin:auto;max-width:430px;text-align:center;
+      color:#fff;
     }
     .admission-form input, .admission-form select {
-      width:100%;margin:0 0 12px 0;padding:11px;border-radius:6px;
-      border:2px solid var(--yellow);background:#111;color:#FFD600;
-      font-size:1rem;}
+      width:98%;margin:9px auto 15px auto;padding:14px;border-radius:8px;
+      border:2.3px solid var(--yellow); font-size:1.1rem; background:#131313;color:var(--yellow);display:block;
+    }
     .admission-form button {
-      width:100%;background:var(--yellow);color:#101010b5;font-weight:800;padding:14px 0;
-      border:0;border-radius:6px;font-size:1.15rem;cursor:pointer;box-shadow:var(--shadow);}
-    .bump-offer {background:#ffd60010;padding:10px 14px;border-radius:11px;margin:14px 0;font-size:.98rem;color:#FFD600;border:1.5px dashed var(--yellow);}
-    .footer {background:#111;padding:22px 0;color:#FFD600b0;text-align:center; font-size:1rem;position:fixed;left:0;right:0;bottom:0;}
-    a { color:var(--yellow-light); }
-    @media(max-width:700px){.programs,.packages,.testimonials{flex-direction:column;align-items:center;}}
+      width:100%;background:var(--yellow);color:var(--black);font-weight:900;
+      border:0;padding:17px 0;margin:16px 0 7px 0;border-radius:11px;font-size:1.22rem;cursor:pointer;box-shadow: 0 0 12px var(--yellow);}
+    .bump-offer {background: #FFD60020;padding:14px;border-radius:14px;margin:16px 0;color:#FFD600;font-size:1.02rem;border:2px dashed var(--yellow);}
+    #thanksMsg {display:none;color:var(--yellow);font-weight:700;margin-top:20px;}
+    /* Footer */
+    .footer {background:var(--gray);color:#FFD600c2;text-align:center; padding:28px 2px 13px 2px; font-size:1rem;margin-top:60px;}
+    .footer a { color:var(--yellow);}
+    @media(max-width:900px){section{padding:10px 7vw;}}
+    @media(max-width:700px){.hero-section{min-height:430px;}.programs,.packages{grid-template-columns:1fr;flex-direction:column;align-items:center;}}
   </style>
 </head>
 <body>
-
 <div class="sticky-bar">
-  Need a Consultation? <a href="tel:+912345678900">Call Now +91 23456 78900</a>
+  Get Free Consultation! <a href="tel:+919999988888">Call Now</a>
 </div>
 
-<div class="gym-header">
-  YELLOW PULSE GYM
-</div>
-
-<div class="hero">
-  <h2>Unleash Your Potential.<br><span style="color:#FFD600">Transform Your Life.</span></h2>
-  <p>Step into an elite space where equipment, expertise, and energy fuse together. State-of-the-art machines, certified trainers, and global wellness programs—now in yellow and black.</p>
-  <button class="cta-btn" onclick="document.getElementById('admission').scrollIntoView({behavior:'smooth'})">Get Your Free Trial</button>
-</div>
-
-<!-- Programs Section -->
-<div class="programs">
-  <div class="prog-card">
-    <h3>Personal Training</h3>
-    <p>1-on-1 coaching with certified trainers for targeted results.</p>
-  </div>
-  <div class="prog-card">
-    <h3>Group Fitness</h3>
-    <p>Yoga, Zumba, HIIT, Spinning, and more—find your group energy!</p>
-  </div>
-  <div class="prog-card">
-    <h3>Corporate Wellness</h3>
-    <p>Customized memberships and sessions for your organization’s health.</p>
+<!-- HERO SECTION WITH ANIMATION -->
+<div class="hero-section" id="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content" data-aos="fade-up">
+    <div class="gym-name">GEAR-UP GYM</div>
+    <div class="hero-tagline">Power, Performance, Pride.<br>Level Up with <span style="color:#FFD600">GEAR-UP GYM</span></div>
+    <button class="join-btn" onclick="document.getElementById('admission').scrollIntoView({behavior:'smooth'})">JOIN NOW</button>
   </div>
 </div>
 
-<!-- Exercise Types -->
-<div class="programs" style="margin-top:19px;">
-  <div class="prog-card">
-    <h3>Bench Press</h3>
-    <p>Chest, Shoulders, Triceps<br><i>For strength & muscle growth</i></p>
+<section>
+  <h2 data-aos="fade-up">Why Choose Us?</h2>
+  <div class="programs">
+    <div class="prog-card" data-aos="fade-up" data-aos-delay="100">
+      <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/000000/external-dumbbell-gym-flaticons-lineal-color-flat-icons-2.png"/>
+      <h3>Strength Training</h3>
+      <p>Bench Press, Squats, Deadlifts & More<br><span style="color:#FFD600">Build: Chest, Legs, Core, Back</span></p>
+    </div>
+    <div class="prog-card" data-aos="fade-up" data-aos-delay="180">
+      <img src="https://img.icons8.com/color/64/000000/yoga.png"/>
+      <h3>Group Classes</h3>
+      <p>Yoga, Zumba, HIIT, Cardio<br><span style="color:#FFD600">Shape: Flexibility, Mind, Endurance</span></p>
+    </div>
+    <div class="prog-card" data-aos="fade-up" data-aos-delay="260">
+      <img src="https://img.icons8.com/color/64/000000/personal-trainer.png"/>
+      <h3>Personal Coaching</h3>
+      <p>Certified Trainers, Custom Plans<br><span style="color:#FFD600">Focus: All Body Parts</span></p>
+    </div>
+    <div class="prog-card" data-aos="fade-up" data-aos-delay="340">
+      <img src="https://img.icons8.com/color/64/000000/bath.png"/>
+      <h3>Wellness Zone</h3>
+      <p>Steam, Sauna, Nutritional Advice<br><span style="color:#FFD600">Recover & Recharge</span></p>
+    </div>
   </div>
-  <div class="prog-card">
-    <h3>Deadlift</h3>
-    <p>Back, Core, Legs<br><i>For power & full-body</i></p>
-  </div>
-  <div class="prog-card">
-    <h3>Yoga</h3>
-    <p>Flexibility, Core, Mind<br><i>For balance & endurance</i></p>
-  </div>
-  <div class="prog-card">
-    <h3>HIIT</h3>
-    <p>Full Body<br><i>Fat loss and stamina boost</i></p>
-  </div>
-</div>
+</section>
 
-<!-- Packages Section -->
-<h2 style="text-align:center;color:#FFD600;">Choose Your Plan</h2>
-<div class="packages">
-  <div class="package">
-    <div class="pack-title">Classic Access</div>
-    <div class="pack-price">₹1,799/mo</div>
-    <ul>
-      <li>Unlimited Gym Floor</li>
-      <li>Locker Room</li>
-      <li>Free Diet Consult</li>
-    </ul>
+<section>
+  <h2 style="text-align:center;" data-aos="fade-up">Our Packages</h2>
+  <div class="packages">
+    <div class="package" style="animation-delay:.10s" data-aos="flip-left">
+      <div class="pack-title">Basic Beast</div>
+      <div class="pack-price">₹1,799/mo</div>
+      <ul>
+        <li>Full Gym Access</li>
+        <li>Locker & Changing Room</li>
+        <li>Free Nutrition Session</li>
+      </ul>
+    </div>
+    <div class="package best" style="animation-delay:.30s" data-aos="flip-up">
+      <span class="best-badge">BEST VALUE</span>
+      <div class="pack-title">Ultimate Warrior</div>
+      <div class="pack-price">₹2,999/mo</div>
+      <ul>
+        <li>All Basic Features</li>
+        <li>Personal Trainer (4/mo)</li>
+        <li>Group Fitness Classes</li>
+        <li>Sauna & Steam</li>
+      </ul>
+    </div>
+    <div class="package" style="animation-delay:.50s" data-aos="flip-right">
+      <div class="pack-title">Titan Elite</div>
+      <div class="pack-price">₹5,499/mo</div>
+      <ul>
+        <li>All Warrior Features</li>
+        <li>Unlimited Personal Training</li>
+        <li>VIP Locker Suite</li>
+        <li>Supplement Bundle</li>
+      </ul>
+    </div>
   </div>
-  <div class="package best">
-    <div class="pack-title">Pro Pulse (BEST VALUE)</div>
-    <div class="pack-price">₹2,799/mo</div>
-    <ul>
-      <li>Everything in Classic</li>
-      <li>Personal Trainer (4/mo)</li>
-      <li>Group Classes</li>
-      <li>Sauna Access</li>
-    </ul>
-  </div>
-  <div class="package">
-    <div class="pack-title">Elite Titan</div>
-    <div class="pack-price">₹4,999/mo</div>
-    <ul>
-      <li>All Pro Pulse Benefits</li>
-      <li>Unlimited PT</li>
-      <li>Priority Support</li>
-    </ul>
-  </div>
-</div>
+</section>
 
-<!-- Testimonials -->
-<h2 style="text-align:center;color:#FFD600;">Member Stories</h2>
-<div class="testimonials">
-  <div class="testimonial">
-    <p>“I finally hit my fitness targets, thanks to the incredible trainers!”</p>
-    <div class="testimonial-author">- Mehul S., Mumbai</div>
+<section>
+  <h2 style="text-align:center;" data-aos="fade-up">What Our Members Say</h2>
+  <div class="testimonials-slider" data-aos="zoom-in-up">
+    <div class="testimonial active">
+      <p>“I never thought I’d look forward to gym days! GEAR-UP is not just a gym—it’s passion. The lighting and music pump me up!”</p>
+      <div class="testimonial-author">- Kavya Sharma, Delhi</div>
+    </div>
+    <div class="testimonial">
+      <p>“The coaching team is world-class! I achieved my transformation faster than ever. Highly recommend Ultimate Warrior plan.”</p>
+      <div class="testimonial-author">- Aarav Mehra, Gurgaon</div>
+    </div>
+    <div class="testimonial">
+      <p>“Modern facilities, great vibe, welcoming environment. Love the early bird discounts and events!”</p>
+      <div class="testimonial-author">- Ritesh Singh, Noida</div>
+    </div>
+    <div class="testimonial-controls">
+      <span class="testimonial-dots">
+        <span class="testimonial-dot active"></span>
+        <span class="testimonial-dot"></span>
+        <span class="testimonial-dot"></span>
+      </span>
+    </div>
   </div>
-  <div class="testimonial">
-    <p>“The yellow and black atmosphere is electric! The Pro Pulse plan changed my life.”</p>
-    <div class="testimonial-author">- Riya T., Pune</div>
-  </div>
-</div>
+</section>
 
-<!-- Admission Form -->
-<div id="admission" class="admission-form">
-  <form id="gymForm" autocomplete="off">
+<section id="admission">
+  <h2 style="text-align:center;" data-aos="fade-up">Join GEAR-UP GYM</h2>
+  <form id="admissionForm" class="admission-form" autocomplete="off" data-aos="fade-right">
     <input type="text" name="name" placeholder="Full Name" required/>
-    <input type="email" name="email" placeholder="Your Email" required/>
+    <input type="email" name="email" placeholder="Email Address" required/>
     <input type="tel" name="phone" placeholder="Mobile Number" required/>
     <select name="package">
-      <option value="Classic Access">Classic Access</option>
-      <option value="Pro Pulse">Pro Pulse</option>
-      <option value="Elite Titan">Elite Titan</option>
+      <option value="Basic Beast">Basic Beast (₹1,799/mo)</option>
+      <option value="Ultimate Warrior">Ultimate Warrior (₹2,999/mo)</option>
+      <option value="Titan Elite">Titan Elite (₹5,499/mo)</option>
     </select>
-    <div class="bump-offer">
-      🔥 Limited Time: <b>20% off for first 3 months</b> for signups before <span id="offerDate"></span>!
-      <br><input type="checkbox" name="bump" required/> Yes, add this bump offer!
+    <div class="bump-offer" id="bumpOffer">
+      🔥 LIMITED TIME: <b>20% OFF for 3 months</b> if you enroll before <span id="offerDate"></span>!
+      <br><input type="checkbox" name="bump" required/> Yes, I want the bump offer!
     </div>
-    <button type="submit">Join the Yellow Pulse</button>
+    <button type="submit">Become a GEAR-UP Member</button>
+    <div id="thanksMsg">Thank you for joining GEAR-UP GYM!<br>Check your email for a welcome message.</div>
   </form>
-  <div id="thanks" style="display:none;color:var(--yellow);margin-top:20px;font-weight:700;">
-    Thank you for joining! <br>Check your email for the welcome message<br>and get ready to pulse up!
-  </div>
-</div>
+</section>
 
 <div class="footer">
-  &copy; 2025 YELLOW PULSE GYM | <a href="mailto:aisignalhunter@gmail.com">Contact</a> | 24/7 Access | IG @yellowpulsegym
+  &copy; 2025 GEAR-UP GYM | <a href="mailto:aisignalhunter@gmail.com">Contact</a> | 24/7 Access | IG @gearupgym | Unleash the Beast
 </div>
 
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  // Offer date - today + 5 days
+  // AOS Page-wide scroll animation
+  AOS.init({duration: 950, once:true});
+  // Set bump offer date +5 days
   const offerEnd = new Date(Date.now() + 5*24*60*60*1000);
   document.getElementById('offerDate').innerText = offerEnd.toDateString().slice(4);
-  // Fake AJAX for demo
-  document.getElementById('gymForm').onsubmit = function(e){
+
+  // Testimonials Slider
+  const testimonials = document.querySelectorAll('.testimonial');
+  const dots = document.querySelectorAll('.testimonial-dot');
+  let tidx = 0;
+  function showTestimonial(idx){
+    testimonials.forEach((t, i) => {
+      t.classList.toggle('active', i===idx);
+      dots[i].classList.toggle('active', i===idx);
+    });
+  }
+  dots.forEach((d,i) => d.onclick = ()=>{tidx=i;showTestimonial(i)});
+  setInterval(()=>{ tidx=(tidx+1)%testimonials.length;showTestimonial(tidx);}, 4000);
+
+  // Form Submission (demo only)
+  document.getElementById('admissionForm').onsubmit = function(e){
     e.preventDefault();
-    // In prod: AJAX to backend, then show thank you
-    document.getElementById('gymForm').style.display = "none";
-    document.getElementById('thanks').style.display = "block";
+    document.getElementById('admissionForm').reset();
+    document.getElementById('thanksMsg').style.display="block";
+    setTimeout(()=>{document.getElementById('thanksMsg').style.display="none";},4000);
+    // Place backend integration or Formspree/Zapier/Google Forms here
   }
 </script>
 </body>
