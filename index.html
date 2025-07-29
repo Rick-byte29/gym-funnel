@@ -2,337 +2,207 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Beast Typr Gym</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yellow Pulse Gym</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:800,400" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
-    body {
-      background: #101010;
-      color: #ceff00;
-      font-family: 'Orbitron', Arial, sans-serif;
-      margin: 0;
-      padding: 0 0 100px 0;
-      overflow-x: hidden;
+    :root {
+      --yellow: #FFD600;
+      --yellow-light: #FFF59D;
+      --black: #101010;
+      --shadow: 0 0 16px #FFD60088;
     }
-    /* Loading Screen */
-    #loader {
-      position: fixed;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      background: #000;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 9999;
-      flex-direction: column;
-      transition: opacity 0.7s;
+    body { background: var(--black); color: var(--yellow); font-family: 'Montserrat',Arial,sans-serif; margin:0; }
+    .sticky-bar {
+      position:fixed; top:0;left:0;width:100%;background:#191919;padding:13px;text-align:center;
+      color:var(--yellow);z-index:999;box-shadow:var(--shadow);
+      font-weight:bold;letter-spacing:1px; }
+    .sticky-bar a { color:var(--yellow);margin-left:18px;text-decoration:underline; }
+    .gym-header {
+      padding:55px 0 15px 0;text-align:center;
+      font-size:2.7rem;font-weight:800;letter-spacing:2.2px;
+      text-shadow:0 0 20px var(--yellow),0 0 10px #0008;
     }
-    #loader .enter {
-      font-size: 3rem; 
-      color: #ceff00; 
-      text-shadow: 0 0 30px #ceff00, 0 0 20px #000;
-      opacity: 0; 
-      animation: neon-in 2s 0.8s forwards;
+    .hero {
+      text-align:center;padding:1.5em 1em;
+      background: #111111;
+      border-radius:14px; box-shadow: var(--shadow);
+      margin:30px auto 30px auto;max-width:750px;
     }
-    @keyframes neon-in {
-      to { opacity: 1; filter: brightness(2) drop-shadow(0 0 18px #ceff00); }
+    .hero .cta-btn {
+      background:var(--yellow);color:#111;
+      font-weight:bold;border:0;padding:16px 34px;
+      font-size:1.13rem;border-radius:8px;margin-top:12px;
+      cursor:pointer;box-shadow:0 0 8px var(--yellow); }
+    .programs, .testimonials, .packages { display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+    .prog-card, .testimonial, .package {
+      background:#181818;padding:22px;border-radius:14px;min-width:240px;max-width:310px;text-align:center;
+      margin-bottom:18px;box-shadow:0 0 10px #0007;
+      border-left:4px solid var(--yellow);
     }
-    #loader .bar {
-      width: 200px; height: 8px; 
-      background: #222; border-radius: 8px;
-      overflow: hidden; margin: 30px 0;
-      box-shadow: 0 0 10px #ceff0060;
-      position: relative;
+    .prog-card h3 { color: var(--yellow-light); margin-bottom:8px;}
+    .prog-card p {font-size:1rem;color:#fff;}
+    .testimonial { border-color:#FFD60080;}
+    .testimonial-author { font-weight:bold;color:var(--yellow);}
+    .testimonials {margin-bottom:5px;}
+    .packages {margin:30px 0;}
+    .package { border:2px solid #FFD60044; }
+    .package.best { border:2.5px solid var(--yellow); box-shadow:0 0 20px var(--yellow);}
+    .pack-title { color:var(--yellow);font-size:1.2rem; }
+    .pack-price { font-size:2rem;color:#fff;margin:18px 0;}
+    .package ul {list-style:none;padding:0;}
+    .package li {color:var(--yellow-light);}
+    .admission-form {
+      max-width:450px;margin:30px auto 0 auto;background:#131313;padding:30px 25px;border-radius:14px;box-shadow:var(--shadow);color:#fff;
     }
-    #loader .bar span {
-      display: block; height: 100%;
-      background: linear-gradient(90deg,#ceff00,#84fa0a);
-      width: 0%; border-radius: 8px;
-      transition: width 2s;
-    }
-    /* Sticky Consultation Bar */
-    .sticky {
-      position: fixed; top: 0; left: 0; width: 100%;
-      background: #111; color: #ceff00;
-      padding: 12px 0; text-align: center; 
-      z-index: 999; font-size: 1.1rem;
-      box-shadow: 0 2px 16px #ceff003a;
-      transition: top 0.5s;
-    }
-    .sticky a { color: #ceff00; font-weight: bold; text-decoration: none; margin-left: 22px; }
-    .sticky a:hover {text-decoration: underline;}
-    /* Neon Header */
-    .gym-name {
-      font-size: 3.5rem; text-align: center; margin: 70px 0 15px 0;
-      color: #ceff00; letter-spacing: 1.5px; font-family: 'Orbitron', monospace;
-      text-shadow: 0 0 22px #ceff00, 0 0 6px #fff;
-      animation: flicker 1.5s infinite alternate;
-    }
-    @keyframes flicker {
-      from { filter: brightness(2) drop-shadow(0 0 22px #85fa03); }
-      to   { filter: brightness(1.2) drop-shadow(0 0 12px #444); }
-    }
-    /* Section Styles */
-    .section {
-      max-width: 950px; margin: auto; padding: 32px 18px;
-      background: #17171780; border-radius: 18px; box-shadow: 0 0 18px #111a;
-      margin-bottom: 32px;
-    }
-    h2 {
-      color: #ceff00;
-      text-shadow: 0 0 8px #ceff00;
-      border-bottom: 2px solid #ceff0030; padding-bottom: 6px;
-    }
-    /* Exercises Grid */
-    .exercises {
-      display: grid; gap: 16px; grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
-    }
-    .exercise {
-      background: #131313; border-radius: 10px; padding: 20px; min-height: 130px;
-      border-left: 5px solid #ceff00bb; transition:transform .17s;
-      box-shadow: 0 0 10px #ceff0059;
-    }
-    .exercise:hover { transform: scale(1.04);}
-    .exercise-title {font-size:1.19rem; color:#ceff00;}
-    .exercise-body { font-size:1rem; color: #9dde23;}
-    /* Packages */
-    .packages {display:flex;gap:18px;justify-content:space-around;flex-wrap:wrap;}
-    .package {
-      background:#121212;padding:30px 20px;border-radius:12px;width:300px;box-shadow:0 0 12px #0007;
-      text-align:center; border:2px solid #ceff001c; position:relative; transition:transform .17s;
-    }
-    .package.best { 
-      border:2.5px solid #ceff00; 
-      box-shadow:0 0 50px #ceff003c,0 0 18px #ceff001a; 
-      z-index:1; transform:scale(1.06);
-    }
-    .pack-title { font-size:1.3rem;color:#ceff00;text-transform:uppercase; }
-    .pack-price { font-size:2.3rem;color:#fff;margin:18px 0 8px 0;}
-    .package ul {list-style:none;padding:0;margin:10px 0;}
-    .package li {color:#ceff00c7; margin-bottom:3px;}
-    .best-badge {
-      position:absolute; top:-22px; left:50%; transform:translateX(-50%);
-      background:#ceff00; color:#111; font-weight:bold; padding:5px 14px; border-radius:12px;
-      box-shadow:0 0 8px #ceff00;
-      font-size:1rem; letter-spacing:1px;
-    }
-    /* Admission Form */
-    .form-wrapper {
-      background:#101f10; border-radius:16px; box-shadow:0 0 12px #85fa0360;
-      padding:24px 20px; margin:36px auto 0 auto; text-align:center;max-width:430px;
-      position:relative;
-    }
-    .form-wrapper h2 {color:#ceff00;}
     .admission-form input, .admission-form select {
-      width:82%;margin:10px auto;padding:10px;border-radius:6px;
-      border:1px solid #ceff00c2; font-size:1rem; background:#151919;
-      color:#ceff00;display:block;
-    }
+      width:100%;margin:0 0 12px 0;padding:11px;border-radius:6px;
+      border:2px solid var(--yellow);background:#111;color:#FFD600;
+      font-size:1rem;}
     .admission-form button {
-      background:linear-gradient(90deg,#ceff00,#6fea02); color:#000;font-weight:bold;
-      border:0;padding:14px 0;width:88%;margin:18px 0 8px 0;border-radius:6px;font-size:1.2rem;
-      cursor:pointer; box-shadow:0 0 10px #ceff00d4;
-      transition: background .2s;
-    }
-    /* Bump Offer */
-    .bump-offer {background:#222; color:#ceff00;padding:14px;border-radius:14px;margin:16px 0; font-size:1rem; animation:bump-pop .8s;}
-    @keyframes bump-pop {0%{transform:scale(0.7);} 63%{transform:scale(1.15);}100%{transform:scale(1);}}
-
-    /* Testimonials */
-    .testimonials {display:flex; gap:18px; flex-wrap:wrap;}
-    .testimonial {
-      background:#151f15; border-radius:8px; padding:17px; flex:1 1 220px; box-shadow:0 0 15px #ceff0033;
-      margin:0 2px 12px 0; min-width:220px;
-    }
-    .testimonial-author { color: #ceff00; font-weight: bold; }
-    /* Footer */
-    .footer {
-      background:#161916; color: #ceff00b3; text-align:center; padding:30px 3px 12px 3px; font-size:1.03rem;
-      position:fixed; left:0; right:0; bottom:0;
-      box-shadow:0 -2px 16px #101a;
-    }
-    a { color: #8dff12;}
-    @media (max-width:600px) {
-      .packages {flex-direction:column; align-items:center;}
-      .gym-name {font-size:2.1rem;}
-    }
+      width:100%;background:var(--yellow);color:#101010b5;font-weight:800;padding:14px 0;
+      border:0;border-radius:6px;font-size:1.15rem;cursor:pointer;box-shadow:var(--shadow);}
+    .bump-offer {background:#ffd60010;padding:10px 14px;border-radius:11px;margin:14px 0;font-size:.98rem;color:#FFD600;border:1.5px dashed var(--yellow);}
+    .footer {background:#111;padding:22px 0;color:#FFD600b0;text-align:center; font-size:1rem;position:fixed;left:0;right:0;bottom:0;}
+    a { color:var(--yellow-light); }
+    @media(max-width:700px){.programs,.packages,.testimonials{flex-direction:column;align-items:center;}}
   </style>
 </head>
 <body>
 
-<!-- Loading screen -->
-<div id="loader">
-  <div class="bar"><span id="bar-anim"></span></div>
-  <div class="enter">Entering the World of Beast Typr...</div>
+<div class="sticky-bar">
+  Need a Consultation? <a href="tel:+912345678900">Call Now +91 23456 78900</a>
 </div>
 
-<!-- Sticky Consultation Bar -->
-<div class="sticky">
-  Immediate Consultation Call? <a href="tel:+919999999999">Click Here +91 99999 99999</a>
+<div class="gym-header">
+  YELLOW PULSE GYM
 </div>
 
-<!-- Gym Name Header -->
-<div class="gym-name">
-  BEAST TYPR GYM
+<div class="hero">
+  <h2>Unleash Your Potential.<br><span style="color:#FFD600">Transform Your Life.</span></h2>
+  <p>Step into an elite space where equipment, expertise, and energy fuse together. State-of-the-art machines, certified trainers, and global wellness programs—now in yellow and black.</p>
+  <button class="cta-btn" onclick="document.getElementById('admission').scrollIntoView({behavior:'smooth'})">Get Your Free Trial</button>
 </div>
 
-<!-- Exercise Section -->
-<div class="section" id="exercises">
-  <h2>Exercises & Target Body Parts</h2>
-  <div class="exercises">
-    <div class="exercise">
-      <div class="exercise-title">Bench Press</div>
-      <div class="exercise-body">Chest, Shoulders, Triceps<br/><i>Strength & Hypertrophy</i></div>
-    </div>
-    <div class="exercise">
-      <div class="exercise-title">Deadlift</div>
-      <div class="exercise-body">Back, Core, Legs<br/><i>Power & Full-Body</i></div>
-    </div>
-    <div class="exercise">
-      <div class="exercise-title">Squat</div>
-      <div class="exercise-body">Legs, Glutes, Lower Back<br/><i>Strength & Powerlifting</i></div>
-    </div>
-    <div class="exercise">
-      <div class="exercise-title">Pull-Ups</div>
-      <div class="exercise-body">Back, Biceps, Shoulders<br/><i>Calisthenics & Bodyweight</i></div>
-    </div>
-    <div class="exercise">
-      <div class="exercise-title">Shoulder Press</div>
-      <div class="exercise-body">Shoulders, Triceps<br/><i>Hypertrophy & Strength</i></div>
-    </div>
-    <div class="exercise">
-      <div class="exercise-title">Lunges</div>
-      <div class="exercise-body">Quads, Glutes, Hamstrings<br/><i>Functional & Balance</i></div>
-    </div>
-    <div class="exercise">
-      <div class="exercise-title">Plank</div>
-      <div class="exercise-body">Core, Abs, Lower Back<br/><i>Endurance & Stability</i></div>
-    </div>
+<!-- Programs Section -->
+<div class="programs">
+  <div class="prog-card">
+    <h3>Personal Training</h3>
+    <p>1-on-1 coaching with certified trainers for targeted results.</p>
+  </div>
+  <div class="prog-card">
+    <h3>Group Fitness</h3>
+    <p>Yoga, Zumba, HIIT, Spinning, and more—find your group energy!</p>
+  </div>
+  <div class="prog-card">
+    <h3>Corporate Wellness</h3>
+    <p>Customized memberships and sessions for your organization’s health.</p>
   </div>
 </div>
 
-<!-- Packages -->
-<div class="section" id="packages">
-  <h2>Choose Your Beast Mode</h2>
-  <div class="packages">
-    <div class="package">
-      <div class="pack-title">Starter Pack</div>
-      <div class="pack-price">₹ 1,999/mo</div>
-      <ul>
-        <li>Gym Floor Access</li>
-        <li>Group Fitness Classes</li>
-        <li>Locker Room</li>
-      </ul>
-    </div>
-    <div class="package best">
-      <div class="best-badge">BEST VALUE</div>
-      <div class="pack-title">Pro Beast Pack</div>
-      <div class="pack-price">₹ 2,999/mo</div>
-      <ul>
-        <li>Everything in Starter</li>
-        <li>Personal Trainer 4x/mo</li>
-        <li>Nutrition Plan</li>
-        <li>Sauna + Steam Room</li>
-      </ul>
-    </div>
-    <div class="package">
-      <div class="pack-title">Elite Monster</div>
-      <div class="pack-price">₹ 5,499/mo</div>
-      <ul>
-        <li>Everything in Pro Beast</li>
-        <li>Unlimited PT</li>
-        <li>VIP Locker</li>
-        <li>Supplement Bundle</li>
-      </ul>
-    </div>
+<!-- Exercise Types -->
+<div class="programs" style="margin-top:19px;">
+  <div class="prog-card">
+    <h3>Bench Press</h3>
+    <p>Chest, Shoulders, Triceps<br><i>For strength & muscle growth</i></p>
+  </div>
+  <div class="prog-card">
+    <h3>Deadlift</h3>
+    <p>Back, Core, Legs<br><i>For power & full-body</i></p>
+  </div>
+  <div class="prog-card">
+    <h3>Yoga</h3>
+    <p>Flexibility, Core, Mind<br><i>For balance & endurance</i></p>
+  </div>
+  <div class="prog-card">
+    <h3>HIIT</h3>
+    <p>Full Body<br><i>Fat loss and stamina boost</i></p>
+  </div>
+</div>
+
+<!-- Packages Section -->
+<h2 style="text-align:center;color:#FFD600;">Choose Your Plan</h2>
+<div class="packages">
+  <div class="package">
+    <div class="pack-title">Classic Access</div>
+    <div class="pack-price">₹1,799/mo</div>
+    <ul>
+      <li>Unlimited Gym Floor</li>
+      <li>Locker Room</li>
+      <li>Free Diet Consult</li>
+    </ul>
+  </div>
+  <div class="package best">
+    <div class="pack-title">Pro Pulse (BEST VALUE)</div>
+    <div class="pack-price">₹2,799/mo</div>
+    <ul>
+      <li>Everything in Classic</li>
+      <li>Personal Trainer (4/mo)</li>
+      <li>Group Classes</li>
+      <li>Sauna Access</li>
+    </ul>
+  </div>
+  <div class="package">
+    <div class="pack-title">Elite Titan</div>
+    <div class="pack-price">₹4,999/mo</div>
+    <ul>
+      <li>All Pro Pulse Benefits</li>
+      <li>Unlimited PT</li>
+      <li>Priority Support</li>
+    </ul>
   </div>
 </div>
 
 <!-- Testimonials -->
-<div class="section" id="testimonials">
-  <h2>Transformations & Rave Reviews</h2>
-  <div class="testimonials">
-    <div class="testimonial">
-      <p>"The energy here is contagious; I smashed all my fitness goals in just 2 months!"</p>
-      <div class="testimonial-author">- Aryan P., Gurgaon</div>
-    </div>
-    <div class="testimonial">
-      <p>"Best trainers in town, super motivating. The Pro Beast plan is totally worth it!"</p>
-      <div class="testimonial-author">- Simran K., Delhi</div>
-    </div>
-    <div class="testimonial">
-      <p>"The neon vibe is next level. The bump offer legit saved me extra ₹."</p>
-      <div class="testimonial-author">- Ritesh D., Noida</div>
-    </div>
+<h2 style="text-align:center;color:#FFD600;">Member Stories</h2>
+<div class="testimonials">
+  <div class="testimonial">
+    <p>“I finally hit my fitness targets, thanks to the incredible trainers!”</p>
+    <div class="testimonial-author">- Mehul S., Mumbai</div>
+  </div>
+  <div class="testimonial">
+    <p>“The yellow and black atmosphere is electric! The Pro Pulse plan changed my life.”</p>
+    <div class="testimonial-author">- Riya T., Pune</div>
   </div>
 </div>
 
 <!-- Admission Form -->
-<div class="form-wrapper" id="formbox">
-  <h2>Your Transformation Starts Here</h2>
-  <form class="admission-form" id="admissionForm" autocomplete="off">
-    <input type="text" name="name" placeholder="Full Name" required />
-    <input type="email" name="email" placeholder="Email Address" required />
-    <input type="tel" name="phone" placeholder="Phone Number" required />
+<div id="admission" class="admission-form">
+  <form id="gymForm" autocomplete="off">
+    <input type="text" name="name" placeholder="Full Name" required/>
+    <input type="email" name="email" placeholder="Your Email" required/>
+    <input type="tel" name="phone" placeholder="Mobile Number" required/>
     <select name="package">
-      <option value="starter">Starter Pack</option>
-      <option value="probeast">Pro Beast Pack</option>
-      <option value="elite">Elite Monster</option>
+      <option value="Classic Access">Classic Access</option>
+      <option value="Pro Pulse">Pro Pulse</option>
+      <option value="Elite Titan">Elite Titan</option>
     </select>
-    <div class="bump-offer" id="bumpOffer" style="display:none;">
-      🔥 Limited Period! 20% off first 3 months for signups before <span id="offerDate"></span>!
-      <br>Tick to grab this: <input type="checkbox" name="bump" id="bumpCheck" />
+    <div class="bump-offer">
+      🔥 Limited Time: <b>20% off for first 3 months</b> for signups before <span id="offerDate"></span>!
+      <br><input type="checkbox" name="bump" required/> Yes, add this bump offer!
     </div>
-    <button type="submit">Join the Beast Typr Family</button>
+    <button type="submit">Join the Yellow Pulse</button>
   </form>
+  <div id="thanks" style="display:none;color:var(--yellow);margin-top:20px;font-weight:700;">
+    Thank you for joining! <br>Check your email for the welcome message<br>and get ready to pulse up!
+  </div>
 </div>
 
-<!-- Thank You Page (Hidden initially) -->
-<div class="section" id="thanks" style="display:none; text-align:center;">
-  <h2>Thank you for joining Beast Typr Gym! 💪</h2>
-  <p>We've received your information.<br>
-  <b>Check your email for a special welcome message!</b><br>
-  Get ready to transform—one rep at a time!</p>
-</div>
-
-<!-- Footer -->
 <div class="footer">
-  &copy; 2025 BEAST TYPR GYM | <a href="mailto:aisignalhunter@gmail.com">Contact Us</a> | Open 24/7 | Follow: IG @BeastTypr <br>
-  <span style="color:#6fea02">Unleash Your Beast</span>
+  &copy; 2025 YELLOW PULSE GYM | <a href="mailto:aisignalhunter@gmail.com">Contact</a> | 24/7 Access | IG @yellowpulsegym
 </div>
 
 <script>
-  // Loading screen animation
-  window.onload = function() {
-    document.getElementById('bar-anim').style.width = "100%";
-    setTimeout(function(){
-      document.getElementById('loader').style.opacity = 0;
-      setTimeout(function(){document.getElementById('loader').remove();},900);
-      // Show bump offer after 2 sec for effect
-      setTimeout(()=>document.getElementById('bumpOffer').style.display = 'block', 2000);
-    }, 2500);
-    // Set limited offer date - today + 5 days
-    const offerEnd = new Date(Date.now() + 5*24*60*60*1000);
-    document.getElementById('offerDate').innerText = offerEnd.toDateString();
-  }
-
-  // Form submission - (simulated for client side)
-  document.getElementById('admissionForm').addEventListener('submit', function(e){
+  // Offer date - today + 5 days
+  const offerEnd = new Date(Date.now() + 5*24*60*60*1000);
+  document.getElementById('offerDate').innerText = offerEnd.toDateString().slice(4);
+  // Fake AJAX for demo
+  document.getElementById('gymForm').onsubmit = function(e){
     e.preventDefault();
-    // Optionally, check if bump offer was accepted
-    const bump = document.getElementById('bumpCheck').checked;
-    // Show thank you page; hide form
-    document.getElementById('formbox').style.display = 'none';
-    document.getElementById('thanks').style.display = 'block';
-
-    /* 
-    -- BACK-END Integration Required --
-    1. Use AJAX/fetch to POST form data to your server.
-    2. Server sends you (aisignalhunter@gmail.com) the form details and sends a confirmation to user.
-    3. After success, redirect or update UI as above.
-    4. Example solutions: Formspree, Google Forms (with auto-responder), zapier to Gmail, or custom Node/PHP script.
-    */
-
-    // For testing: redirect to Thank You after 2s, or send email
-    // window.location.href = "mailto:aisignalhunter@gmail.com";
-  });
+    // In prod: AJAX to backend, then show thank you
+    document.getElementById('gymForm').style.display = "none";
+    document.getElementById('thanks').style.display = "block";
+  }
 </script>
 </body>
 </html>
